@@ -51,6 +51,17 @@
       },
       "additionalProperties": true
     },
+    "privacy": {
+      "type": "object",
+      "properties": {
+        "hideFromCapture": {
+          "type": "boolean",
+          "default": false,
+          "description": "截屏 / 录屏时隐藏组件窗口（DA-45，SetWindowDisplayAffinity）"
+        }
+      },
+      "additionalProperties": true
+    },
     "language": {
       "type": "string",
       "enum": ["zh-CN"],

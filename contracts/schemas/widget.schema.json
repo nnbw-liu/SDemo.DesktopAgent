@@ -56,7 +56,11 @@
       "enum": ["native", "wasm"]
     },
     "native": {
-      "$ref": "#/$defs/native"
+      "oneOf": [
+        { "$ref": "#/$defs/native" },
+        { "type": "null" }
+      ],
+      "description": "renderer=native 时必填且为对象；renderer=wasm 时可缺省或写 null"
     },
     "wasm": {
       "type": ["object", "null"],
@@ -159,7 +163,11 @@
     "activation": {
       "type": ["object", "null"],
       "properties": {
-        "hotkey": { "type": ["string", "null"] },
+        "hotkey": {
+          "type": ["string", "null"],
+          "pattern": "^(?i:(ctrl|control|alt|shift|win|windows|cmd)\\+)+([A-Za-z0-9]|F([1-9]|1[0-9]|2[0-4])|Space|Tab|Enter|Esc|Escape|Backspace|Back|Delete|Del|Insert|Ins|Home|End|PageUp|PgUp|PageDown|PgDn|Up|Down|Left|Right|PrintScreen|PrtSc|Pause)$",
+          "description": "全局热键，如 Ctrl+Alt+T；必须至少一个修饰键"
+        },
         "launchOnStartup": { "type": "boolean" },
         "showInTray": { "type": "boolean" }
       },
@@ -193,14 +201,14 @@
         "properties": { "renderer": { "const": "native" } },
         "required": ["renderer"]
       },
-      "then": { "required": ["native"] }
+      "then": { "required": ["native"], "properties": { "native": { "$ref": "#/$defs/native" } } }
     },
     {
       "if": {
         "properties": { "renderer": { "const": "wasm" } },
         "required": ["renderer"]
       },
-      "then": { "required": ["wasm"] }
+      "then": { "required": ["wasm"], "properties": { "wasm": { "type": "object" } } }
     },
     {
       "if": {

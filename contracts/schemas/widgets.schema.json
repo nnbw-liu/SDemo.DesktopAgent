@@ -97,6 +97,14 @@
             "type": "string",
             "enum": ["granted", "denied", "ask"]
           }
+        },
+        "hotkeyOverride": {
+          "type": ["string", "null"],
+          "description": "用户改过的全局热键（DA-70）；null = 用清单 activation.hotkey，空串 = 用户关闭"
+        },
+        "showInTray": {
+          "type": ["boolean", "null"],
+          "description": "托盘入口覆盖（DA-72）；null = 用清单 activation.showInTray"
         }
       },
       "additionalProperties": true
